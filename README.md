@@ -6,4 +6,4 @@ A project generated from [aunty](https://github.com/abcnews/aunty)'s `preact-app
 
 ## Authors
 
-- Joshua Byrd ([phocks@gmail.com](mailto:phocks@gmail.com))
+- Joshua Byrd ([byrd.joshua@abc.net.au](mailto:byrd.joshua@abc.net.au))
