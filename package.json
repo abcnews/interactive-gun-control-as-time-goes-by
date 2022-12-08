@@ -1,24 +1,24 @@
 {
-  "name": "as-time-goes-by",
-  "version": "1.0.1",
-  "description": "Charts detailing searches over time",
-  "license": "MIT",
-  "private": true,
-  "contributors": [
-    "Joshua Byrd <phocks@gmail.com>"
-  ],
-  "aunty": "preact-app",
-  "scripts": {
-    "start": "aunty serve"
-  },
-  "dependencies": {
-    "@abcnews/aunty": "^13.2.2",
-    "@abcnews/env-utils": "^3.1.0",
-    "d3": "^4.11.0",
-    "date-fns": "^1.29.0",
-    "preact": "^10.11.3"
-  },
-  "devDependencies": {
-    "babel-preset-preact": "^2.0.0"
-  }
+	"name": "as-time-goes-by",
+	"version": "2.0.0",
+	"description": "Charts detailing searches over time",
+	"license": "MIT",
+	"private": true,
+	"contributors": [
+		"Joshua Byrd <phocks@gmail.com>"
+	],
+	"aunty": "preact-app",
+	"scripts": {
+		"start": "aunty serve"
+	},
+	"dependencies": {
+		"@abcnews/aunty": "^13.2.2",
+		"@abcnews/env-utils": "^3.1.0",
+		"d3": "^4.11.0",
+		"date-fns": "^1.29.0",
+		"preact": "^10.11.3"
+	},
+	"devDependencies": {
+		"babel-preset-preact": "^2.0.0"
+	}
 }
