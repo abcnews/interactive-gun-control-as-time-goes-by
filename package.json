@@ -11,13 +11,14 @@
   "scripts": {
     "start": "aunty serve"
   },
-  "devDependencies": {
-    "@abcnews/aunty": "5.5.x"
-  },
   "dependencies": {
+    "@abcnews/aunty": "^13.2.2",
+    "@abcnews/env-utils": "^3.1.0",
+    "d3": "^4.11.0",
     "date-fns": "^1.29.0",
-    "preact": "^8.2.5",
-    "preact-compat": "^3.17.0",
-    "d3": "^4.11.0"
+    "preact": "^10.11.3"
+  },
+  "devDependencies": {
+    "babel-preset-preact": "^2.0.0"
   }
 }

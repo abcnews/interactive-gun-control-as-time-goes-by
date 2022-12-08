@@ -1,14 +1,29 @@
-const { h, render } = require("preact");
+/** @jsx h */
+
+import { h, render } from "preact";
+import { whenOdysseyLoaded } from "@abcnews/env-utils";
+import App from "./components/App";
 
 const PROJECT_NAME = "joyplot";
-const root = document.querySelector(`[data-joyplot-root]`);
+let root;
 
-const elemJoyplot = document.querySelector("[name=joyplot]");
-const elemStacked = document.querySelector("[name=stacked]");
-const elemControl = document.querySelector("[name=control]");
-const elemVegas = document.querySelector("[name=vegas]");
+async function init() {
+  await whenOdysseyLoaded;
 
-function init() {
+  root = document.getElementById("interactivemount");
+  const elemJoyplot = document.getElementById("joyplot");
+  const elemStacked = document.getElementById("stacked");
+  const elemControl = document.getElementById("control");
+  const elemVegas = document.getElementById("vegas");
+
+  const elements = [elemJoyplot, elemStacked, elemControl, elemVegas];
+
+  elements.forEach(element => {
+    if (element) {
+      element.classList.add("u-full");
+    }
+  });
+
   draw(elemJoyplot, "joyplot");
   draw(elemStacked, "stacked");
   draw(elemControl, "control");
@@ -16,9 +31,7 @@ function init() {
 }
 
 function draw(element, type) {
-  const App = require("./components/App");
-
-  render(<App type={type} />, element, element.firstChild);
+  render(<App type={type} />, element);
 }
 
 init();
@@ -31,7 +44,7 @@ if (module.hot) {
     } catch (err) {
       const ErrorBox = require("./components/ErrorBox");
 
-      render(<ErrorBox error={err} />, root, root.firstChild);
+      render(<ErrorBox error={err} />, root);
     }
   });
 }

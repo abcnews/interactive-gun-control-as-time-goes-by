@@ -1,22 +1,20 @@
-const { h, Component } = require("preact");
+import { h, Component } from "preact";
 
-const Joyplot = require("./Joyplot");
-const Pulse = require("./Pulse");
-const Control = require("./Control");
-const Vegas = require("./Vegas");
+import Joyplot from "./Joyplot";
+import Pulse from "./Pulse";
+import Control from "./Control";
+import Vegas from "./Vegas";
 
-const styles = require("./App.scss");
+// import styles from "./App.scss";
 
-const interactiveElement = document.querySelector(
-  "[data-as-time-goes-by-root]"
-);
+// const interactiveElement = document.querySelector("[data-as-time-goes-by-root]");
 
 const dataURLs = {
-  joyplot: interactiveElement.dataset.joyplot,
-  pulse: interactiveElement.dataset.pulse,
-  control: interactiveElement.dataset.control,
-  vegas: interactiveElement.dataset.vegas,
-  fullControl: interactiveElement.dataset.fullcontrol
+  joyplot: `${__webpack_public_path__}data.csv`,
+  pulse: `${__webpack_public_path__}pulse-data.csv`,
+  control: `${__webpack_public_path__}gun-control-data.csv`,
+  vegas: `${__webpack_public_path__}vegas-data.csv`,
+  fullControl: `${__webpack_public_path__}gun-control-full-data.csv`
 };
 
 class App extends Component {
@@ -39,4 +37,4 @@ class App extends Component {
   }
 }
 
-module.exports = App;
+export default App;

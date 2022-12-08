@@ -1,5 +1,5 @@
 import { h, Component } from "preact";
-import * as styles from "./Vegas.scss";
+import styles from "./Vegas.scss";
 import * as d3 from "d3";
 
 var resizeVegas;
@@ -65,7 +65,10 @@ class Vegas extends Component {
       .y0(yScale(0))
       .curve(d3.curveMonotoneX);
 
-    let interestLineData = [[0, 0], [interestLineWidth, 0]];
+    let interestLineData = [
+      [0, 0],
+      [interestLineWidth, 0]
+    ];
     let lineGenerator = d3.line();
     let interestline = lineGenerator(interestLineData);
 
@@ -106,14 +109,14 @@ class Vegas extends Component {
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
     xScale.domain(
-      d3.extent(dataFlat, function(d) {
+      d3.extent(dataFlat, function (d) {
         return d.Week;
       })
     );
 
     yScale.domain([
       -0.4, // Maintain a base line
-      d3.max(dataFlat, function(d) {
+      d3.max(dataFlat, function (d) {
         return maxSearchIndex;
       })
     ]);
@@ -121,10 +124,7 @@ class Vegas extends Component {
     // Draw some guides up top
     const searchInterest = svg
       .append("g")
-      .attr(
-        "transform",
-        "translate(" + (width * 0.255 - interestLineWidth / 2 + 4) + ", 0)"
-      );
+      .attr("transform", "translate(" + (width * 0.255 - interestLineWidth / 2 + 4) + ", 0)");
 
     searchInterest
       .append("path")
@@ -215,10 +215,7 @@ class Vegas extends Component {
 
     // Hacky way of detecting width of text
     let textWidth = timeLineTextLeft.node().getBoundingClientRect().width;
-    timeLineTextLeft.style(
-      "left",
-      width * 0.11 - textWidth * 0.5 + margin.left + "px"
-    );
+    timeLineTextLeft.style("left", width * 0.11 - textWidth * 0.5 + margin.left + "px");
 
     let timeLineTextRight = div
       .append("span")
@@ -233,10 +230,7 @@ class Vegas extends Component {
 
     // Hacky way of detecting width of text
     let textWidth2 = timeLineTextRight.node().getBoundingClientRect().width;
-    timeLineTextRight.style(
-      "right",
-      width * 0.4 - textWidth2 * 0.5 + margin.right + "px"
-    );
+    timeLineTextRight.style("right", width * 0.4 - textWidth2 * 0.5 + margin.right + "px");
 
     dataFlat.columns.forEach((volume, i) => {
       if (volume === "Week") return;
@@ -279,13 +273,9 @@ class Vegas extends Component {
 
       // Resize labels on mobile
       if (width < 500) {
-        d3
-          .selectAll("." + styles.labels + " div")
-          .style("font-size", fontSize - 1 + "px");
+        d3.selectAll("." + styles.labels + " div").style("font-size", fontSize - 1 + "px");
       } else {
-        d3
-          .selectAll("." + styles.labels + " div")
-          .style("font-size", fontSize + "px");
+        d3.selectAll("." + styles.labels + " div").style("font-size", fontSize + "px");
       }
 
       // Try to render gun control in same forEach loop
@@ -312,14 +302,14 @@ class Vegas extends Component {
     resizeVegas = () => {
       clearTimeout(resizeTimer);
 
-      resizeTimer = setTimeout(function() {
+      resizeTimer = setTimeout(function () {
         width = parseInt(d3.select("." + styles.control).style("width"), 10);
         width = width - margin.left - margin.right;
 
         xScale = d3.scaleTime().range([0, width]);
 
         xScale.domain(
-          d3.extent(dataFlat, function(d) {
+          d3.extent(dataFlat, function (d) {
             return d.Week;
           })
         );
@@ -327,34 +317,20 @@ class Vegas extends Component {
         // Direct resizing
         timeLine.attr("x2", width);
         timeLineRightBoundary.attr("x1", width).attr("x2", width);
-        timeLineTextLeft.style(
-          "left",
-          width * 0.11 - textWidth * 0.5 + margin.left + "px"
-        );
-        timeLineTextRight.style(
-          "right",
-          width * 0.4 - textWidth2 * 0.5 + margin.right + "px"
-        );
-        timeEventMarker
-          .attr("x1", width * splitPoint)
-          .attr("x2", width * splitPoint);
+        timeLineTextLeft.style("left", width * 0.11 - textWidth * 0.5 + margin.left + "px");
+        timeLineTextRight.style("right", width * 0.4 - textWidth2 * 0.5 + margin.right + "px");
+        timeEventMarker.attr("x1", width * splitPoint).attr("x2", width * splitPoint);
 
         // Label resizing
         labelMargin = width * splitPoint;
 
-        d3
-          .selectAll("." + styles.labels)
-          .style("width", labelMargin - 10 + "px");
+        d3.selectAll("." + styles.labels).style("width", labelMargin - 10 + "px");
 
         // Resize labels on mobile
         if (width < 500) {
-          d3
-            .selectAll("." + styles.labels + " div")
-            .style("font-size", fontSize - 1 + "px");
+          d3.selectAll("." + styles.labels + " div").style("font-size", fontSize - 1 + "px");
         } else {
-          d3
-            .selectAll("." + styles.labels + " div")
-            .style("font-size", fontSize + "px");
+          d3.selectAll("." + styles.labels + " div").style("font-size", fontSize + "px");
         }
 
         d3.selectAll("." + styles.singlePlot).remove();
@@ -410,8 +386,7 @@ class Vegas extends Component {
   }
 
   loadData() {
-    d3
-      .queue(2) // Load files concurrently (if more than 1)
+    d3.queue(2) // Load files concurrently (if more than 1)
       .defer(d3.csv, this.props.dataURL)
       .defer(d3.csv, this.props.dataURL2)
       .await(this.createChart);
@@ -426,4 +401,4 @@ class Vegas extends Component {
   }
 }
 
-module.exports = Vegas;
+export default Vegas;
