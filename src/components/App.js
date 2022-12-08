@@ -5,10 +5,6 @@ import Pulse from "./Pulse";
 import Control from "./Control";
 import Vegas from "./Vegas";
 
-// import styles from "./App.scss";
-
-// const interactiveElement = document.querySelector("[data-as-time-goes-by-root]");
-
 const dataURLs = {
   joyplot: `${__webpack_public_path__}data.csv`,
   pulse: `${__webpack_public_path__}pulse-data.csv`,
