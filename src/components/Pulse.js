@@ -1,5 +1,5 @@
 import { h, Component } from "preact";
-import * as styles from "./Pulse.scss";
+import styles from "./Pulse.scss";
 import * as d3 from "d3";
 
 var resizePulse;
@@ -65,7 +65,10 @@ class Pulse extends Component {
       .y0(yScale(0))
       .curve(d3.curveMonotoneX);
 
-    let interestLineData = [[0, 0], [interestLineWidth, 0]];
+    let interestLineData = [
+      [0, 0],
+      [interestLineWidth, 0]
+    ];
     let lineGenerator = d3.line();
     let interestline = lineGenerator(interestLineData);
 
@@ -106,14 +109,14 @@ class Pulse extends Component {
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
     xScale.domain(
-      d3.extent(dataFlat, function(d) {
+      d3.extent(dataFlat, function (d) {
         return d.Week;
       })
     );
 
     yScale.domain([
       -0.4, // Maintain a base line
-      d3.max(dataFlat, function(d) {
+      d3.max(dataFlat, function (d) {
         return maxSearchIndex;
       })
     ]);
@@ -121,10 +124,7 @@ class Pulse extends Component {
     // Draw some guides up top
     const searchInterest = svg
       .append("g")
-      .attr(
-        "transform",
-        "translate(" + (width * 0.33 - interestLineWidth / 2 + 4) + ", 0)"
-      );
+      .attr("transform", "translate(" + (width * 0.33 - interestLineWidth / 2 + 4) + ", 0)");
 
     searchInterest
       .append("path")
@@ -140,16 +140,9 @@ class Pulse extends Component {
       .attr("font-size", 11)
       .attr("text-anchor", "end");
 
-    searchInterestText
-      .append("tspan")
-      .text("100% search")
-      .attr("x", -5);
+    searchInterestText.append("tspan").text("100% search").attr("x", -5);
 
-    searchInterestText
-      .append("tspan")
-      .text("interest")
-      .attr("x", -5)
-      .attr("y", 13);
+    searchInterestText.append("tspan").text("interest").attr("x", -5).attr("y", 13);
 
     // Time periods
     let timeLineYPos = -25;
@@ -206,10 +199,7 @@ class Pulse extends Component {
 
     let shootingGroup = svg
       .append("g")
-      .attr(
-        "transform",
-        "translate(" + width * 0.48 + ", " + joyplotHeight * 0.55 + ")"
-      );
+      .attr("transform", "translate(" + width * 0.48 + ", " + joyplotHeight * 0.55 + ")");
 
     shootingGroup
       .append("text")
@@ -231,10 +221,7 @@ class Pulse extends Component {
 
     let gunControlGroup = svg
       .append("g")
-      .attr(
-        "transform",
-        "translate(" + width * 0.85 + ", " + joyplotHeight * 0.55 + ")"
-      );
+      .attr("transform", "translate(" + width * 0.85 + ", " + joyplotHeight * 0.55 + ")");
 
     var gunControlText = gunControlGroup
       .append("text")
@@ -242,10 +229,7 @@ class Pulse extends Component {
       .attr("font-weight", "bold")
       .attr("fill", gunControlGroupColor);
 
-    gunControlText
-      .append("tspan")
-      .text("GUN")
-      .attr("text-anchor", "middle");
+    gunControlText.append("tspan").text("GUN").attr("text-anchor", "middle");
     gunControlText
       .append("tspan")
       .text("CONTROL")
@@ -275,10 +259,7 @@ class Pulse extends Component {
 
     // Hacky way of detecting width of text
     let textWidth = timeLineTextLeft.node().getBoundingClientRect().width;
-    timeLineTextLeft.style(
-      "left",
-      width * 0.146 - textWidth * 0.5 + margin.left + "px"
-    );
+    timeLineTextLeft.style("left", width * 0.146 - textWidth * 0.5 + margin.left + "px");
 
     let timeLineTextRight = div
       .append("span")
@@ -293,10 +274,7 @@ class Pulse extends Component {
 
     // Hacky way of detecting width of text
     let textWidth2 = timeLineTextRight.node().getBoundingClientRect().width;
-    timeLineTextRight.style(
-      "right",
-      width * 0.36 - textWidth2 * 0.5 + margin.right + "px"
-    );
+    timeLineTextRight.style("right", width * 0.36 - textWidth2 * 0.5 + margin.right + "px");
 
     dataFlat.columns.forEach((volume, i) => {
       if (volume === "Week") return;
@@ -360,14 +338,14 @@ class Pulse extends Component {
     resizePulse = () => {
       clearTimeout(resizeTimer);
 
-      resizeTimer = setTimeout(function() {
+      resizeTimer = setTimeout(function () {
         width = parseInt(d3.select("." + styles.pulse).style("width"), 10);
         width = width - margin.left - margin.right;
 
         xScale = d3.scaleTime().range([0, width]);
 
         xScale.domain(
-          d3.extent(dataFlat, function(d) {
+          d3.extent(dataFlat, function (d) {
             return d.Week;
           })
         );
@@ -375,17 +353,9 @@ class Pulse extends Component {
         // Direct resizing
         timeLine.attr("x2", width);
         timeLineRightBoundary.attr("x1", width).attr("x2", width);
-        timeLineTextLeft.style(
-          "left",
-          width * 0.146 - textWidth * 0.5 + margin.left + "px"
-        );
-        timeLineTextRight.style(
-          "right",
-          width * 0.36 - textWidth2 * 0.5 + margin.right + "px"
-        );
-        timeEventMarker
-          .attr("x1", width * splitPoint)
-          .attr("x2", width * splitPoint);
+        timeLineTextLeft.style("left", width * 0.146 - textWidth * 0.5 + margin.left + "px");
+        timeLineTextRight.style("right", width * 0.36 - textWidth2 * 0.5 + margin.right + "px");
+        timeEventMarker.attr("x1", width * splitPoint).attr("x2", width * splitPoint);
         shootingGroup.attr(
           "transform",
           "translate(" + width * 0.48 + ", " + joyplotHeight * 0.55 + ")"
@@ -397,9 +367,7 @@ class Pulse extends Component {
 
         // Selection based resizing
         labelMargin = width * splitPoint;
-        d3
-          .selectAll("." + styles.labels)
-          .style("width", labelMargin - 10 + "px");
+        d3.selectAll("." + styles.labels).style("width", labelMargin - 10 + "px");
 
         d3.selectAll("." + styles.singlePlot).remove();
 
@@ -450,8 +418,7 @@ class Pulse extends Component {
   } // end createChart
 
   loadData() {
-    d3
-      .queue(2) // Load files concurrently (if more than 1)
+    d3.queue(2) // Load files concurrently (if more than 1)
       .defer(d3.csv, this.props.dataURL)
       .defer(d3.csv, this.props.dataURL2)
       .await(this.createChart);
@@ -470,4 +437,4 @@ class Pulse extends Component {
   }
 }
 
-module.exports = Pulse;
+export default Pulse;

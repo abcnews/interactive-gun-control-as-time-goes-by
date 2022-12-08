@@ -1,5 +1,5 @@
 import { h, Component } from "preact";
-import * as styles from "./Joyplot.scss";
+import styles from "./Joyplot.scss";
 import * as d3 from "d3";
 import { format } from "date-fns";
 
@@ -63,7 +63,10 @@ class Joyplot extends Component {
       .curve(d3.curveMonotoneX);
 
     // Set up some lines etc
-    let interestLineData = [[0, 0], [interestLineWidth, 0]];
+    let interestLineData = [
+      [0, 0],
+      [interestLineWidth, 0]
+    ];
 
     let lineGenerator = d3.line();
 
@@ -97,14 +100,14 @@ class Joyplot extends Component {
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
     xScale.domain(
-      d3.extent(dataFlat, function(d) {
+      d3.extent(dataFlat, function (d) {
         return d.Week;
       })
     );
 
     yScale.domain([
       -0.6, // Keep the baseline
-      d3.max(dataFlat, function(d) {
+      d3.max(dataFlat, function (d) {
         // Or just set to 100
         return d["Sydney siege"];
       })
@@ -114,10 +117,7 @@ class Joyplot extends Component {
     // 100% search interest
     const searchInterest = svg
       .append("g")
-      .attr(
-        "transform",
-        "translate(" + (width * 0.15 - interestLineWidth / 2 + 4) + ", 0)"
-      );
+      .attr("transform", "translate(" + (width * 0.15 - interestLineWidth / 2 + 4) + ", 0)");
 
     searchInterest
       .append("path")
@@ -247,13 +247,9 @@ class Joyplot extends Component {
 
       // Resize labels on mobile
       if (width < 500) {
-        d3
-          .selectAll("." + styles.labels + " div")
-          .style("font-size", fontSize - 1 + "px");
+        d3.selectAll("." + styles.labels + " div").style("font-size", fontSize - 1 + "px");
       } else {
-        d3
-          .selectAll("." + styles.labels + " div")
-          .style("font-size", fontSize + "px");
+        d3.selectAll("." + styles.labels + " div").style("font-size", fontSize + "px");
       }
     });
 
@@ -263,8 +259,8 @@ class Joyplot extends Component {
 
     resizeJoyplot = () => {
       clearTimeout(resizeTimer);
-      
-      resizeTimer = setTimeout(function() {
+
+      resizeTimer = setTimeout(function () {
         width = parseInt(d3.select("." + styles.joyplot).style("width"), 10);
         width = width - margin.left - margin.right;
 
@@ -272,7 +268,7 @@ class Joyplot extends Component {
         xScale = d3.scaleTime().range([0, width]);
 
         xScale.domain(
-          d3.extent(dataFlat, function(d) {
+          d3.extent(dataFlat, function (d) {
             return d.Week;
           })
         );
@@ -290,19 +286,13 @@ class Joyplot extends Component {
 
         // SelectAll manipulation
         labelMargin = width * splitPoint;
-        d3
-          .selectAll("." + styles.labels)
-          .style("width", labelMargin - 10 + "px");
+        d3.selectAll("." + styles.labels).style("width", labelMargin - 10 + "px");
 
         // Resize labels on mobile
         if (width < 500) {
-          d3
-            .selectAll("." + styles.labels + " div")
-            .style("font-size", fontSize - 1 + "px");
+          d3.selectAll("." + styles.labels + " div").style("font-size", fontSize - 1 + "px");
         } else {
-          d3
-            .selectAll("." + styles.labels + " div")
-            .style("font-size", fontSize + "px");
+          d3.selectAll("." + styles.labels + " div").style("font-size", fontSize + "px");
         }
 
         d3.selectAll("." + styles.singlePlot).remove();
@@ -334,8 +324,7 @@ class Joyplot extends Component {
   }
 
   loadData() {
-    d3
-      .queue(2) // Load 2 files concurrently (if there are more than 1)
+    d3.queue(2) // Load 2 files concurrently (if there are more than 1)
       .defer(d3.csv, this.props.dataUrl)
       .await(this.createChart);
   }
@@ -353,4 +342,4 @@ class Joyplot extends Component {
   }
 }
 
-module.exports = Joyplot;
+export default Joyplot;

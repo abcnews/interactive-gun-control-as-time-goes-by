@@ -1,5 +1,5 @@
 import { h, Component } from "preact";
-import * as styles from "./Control.scss";
+import styles from "./Control.scss";
 import * as d3 from "d3";
 
 var resizeControl;
@@ -64,7 +64,10 @@ class Control extends Component {
       .y0(yScale(0))
       .curve(d3.curveMonotoneX);
 
-    let interestLineData = [[0, 0], [interestLineWidth, 0]];
+    let interestLineData = [
+      [0, 0],
+      [interestLineWidth, 0]
+    ];
     let lineGenerator = d3.line();
     let interestline = lineGenerator(interestLineData);
 
@@ -93,14 +96,14 @@ class Control extends Component {
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
     xScale.domain(
-      d3.extent(dataFlat, function(d) {
+      d3.extent(dataFlat, function (d) {
         return d.Month;
       })
     );
 
     yScale.domain([
       -0.4, // Maintain a base line
-      d3.max(dataFlat, function(d) {
+      d3.max(dataFlat, function (d) {
         return maxSearchIndex;
       })
     ]);
@@ -191,9 +194,7 @@ class Control extends Component {
           .attr("x", -annotationLineSize - 1)
           .attr("y", -annotationLineSize - 1);
 
-        annotationLine
-          .attr("x2", -annotationLineSize)
-          .attr("y2", -annotationLineSize);
+        annotationLine.attr("x2", -annotationLineSize).attr("y2", -annotationLineSize);
       }
 
       if (object.Alignment === "center") {
@@ -280,14 +281,14 @@ class Control extends Component {
     resizeControl = () => {
       clearTimeout(resizeTimer);
 
-      resizeTimer = setTimeout(function() {
+      resizeTimer = setTimeout(function () {
         width = parseInt(d3.select("." + styles.control).style("width"), 10);
         width = width - margin.left - margin.right;
 
         xScale = d3.scaleTime().range([0, width]);
 
         xScale.domain(
-          d3.extent(dataFlat, function(d) {
+          d3.extent(dataFlat, function (d) {
             return d.Month;
           })
         );
@@ -302,9 +303,7 @@ class Control extends Component {
 
         // Resize the labels
         (labelMargin = width * (1 / 2)),
-          d3
-            .selectAll("." + styles.labels)
-            .style("width", labelMargin - 10 + "px");
+          d3.selectAll("." + styles.labels).style("width", labelMargin - 10 + "px");
 
         // Remove all loop-through items so we can replace later
         d3.selectAll("." + styles.singlePlot).remove();
@@ -346,8 +345,7 @@ class Control extends Component {
   }
 
   loadData() {
-    d3
-      .queue(2) // Load files concurrently (if more than 1)
+    d3.queue(2) // Load files concurrently (if more than 1)
       .defer(d3.csv, this.props.dataURL)
       .await(this.createChart);
   }
@@ -361,4 +359,4 @@ class Control extends Component {
   }
 }
 
-module.exports = Control;
+export default Control;
